@@ -2,8 +2,8 @@
   import { reactive } from 'vue';
 
   const estado = reactive({
-  n1: 0,
-  n2: 0,
+  n1: "",
+  n2: "",
   operacao: "+",
 });
 
@@ -51,14 +51,15 @@ function calculaResultado() {
 
 
 <template>
-    <form>
+    <form class="text-center">
       <div class="row align-items-end">
         <div class="col-md-4">
           <label for="campo1">Número 1</label>
-          <input v-model="estado.n1" class="form-control" type="number"  id="campo1">
+          <input v-model="estado.n1" class="form-control text-center" type="number"  id="campo1">
         </div>
 
         <div class="col-md-4">
+          <label for="">Operador</label>
           <select v-model="estado.operacao" class="form-control text-center">
             <option v-for="op in operacoes" :key="op.value" :value="op.value" value="+">
               {{ op.label }}
@@ -68,10 +69,10 @@ function calculaResultado() {
 
         <div class="col-md-4">
           <label for="campo2">Número 2</label>
-          <input v-model="estado.n2" class="form-control" type="number" id="campo2">
+          <input v-model="estado.n2" class="form-control text-center" type="number" id="campo2">
         </div>
         <div class="m-3 bg-light text-center">
-          <h3>Resultado: {{ calculaResultado() }}</h3>        
+          <h3>O resultado é: {{ calculaResultado() }}</h3>        
         </div>
       </div>
     </form>
