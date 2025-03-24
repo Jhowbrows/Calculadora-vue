@@ -1,5 +1,5 @@
 <script setup>
-  import { reactive } from 'vue';
+  import { computed, reactive } from 'vue';
 
   const estado = reactive({
   n1: "",
@@ -15,17 +15,25 @@ const operacoes = [
 ];
 
 
-function calculaResultado() {
-  if (estado.operacao === "/") {
-    
-    if (estado.n2 === 0) {
-      if(estado.n2 === 0) {
-        return "indefinido";
-      } else {
-        return "Não pode dividir por zero";
-      }
-    }
-  }
+
+
+const onChange = (campo) => {
+ 
+  estado[campo] = estado[campo].replace(/[^0-9.-]/g, '');
+};
+
+
+const resultado = computed(() => {
+  
+  if (!estado.n1 || !estado.n2 || !estado.operacao) return '';
+
+  const n1 = parseFloat(estado.n1);
+  const n2 = parseFloat(estado.n2);
+
+  if (isNaN(n1) || isNaN(n2)) return 'Insira números válidos';
+
+ 
+  if (estado.operacao === '/' && n2 === 0) return 'Não pode dividir por zero';
 
   if (estado.operacao === "*") {
     if( estado.n1 === 0 || estado.n2 === 0) {
@@ -45,7 +53,7 @@ function calculaResultado() {
     default:
       return 0;  
   }
-}
+})
 
 </script>
 
@@ -72,7 +80,7 @@ function calculaResultado() {
           <input v-model="estado.n2" class="form-control text-center" type="number" id="campo2">
         </div>
         <div class="m-3 bg-light text-center">
-          <h3>O resultado é: {{ calculaResultado() }}</h3>        
+          <h3>O resultado é: {{ resultado }}</h3>        
         </div>
       </div>
     </form>
